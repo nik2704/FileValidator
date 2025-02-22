@@ -48,7 +48,7 @@
 2. Склонируйте репозиторий:
    ```bash
    git clone https://github.com/nik2704/FileValidator
-   cd data-validator
+   cd FileValidator
    ```
 3. Соберите проект с помощью **CMake**:
    ```bash
