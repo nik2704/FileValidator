@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE Root [<!ELEMENT Root (SomeElement)><!ELEMENT SomeElement (#PCDATA)><!ATTLIST SomeElement requiredAttribute CDATA #REQUIRED>]>
+<Root><SomeElement requiredAttribute="value">Content</SomeElement></Root>

@@ -1,0 +1,9 @@
+name: Example Project
+version: 1.0.0
+dependencies:
+  boost: 1.75.0
+  yaml-cpp: 0.7.0
+features:
+  - validation
+  - formatting
+  - export
