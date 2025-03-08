@@ -12,13 +12,17 @@ option(WITH_BOOST_TEST "Whether to build Boost test" ON)
 enable_language(C)
 enable_language(CXX)
 
-# Настройки Boost
+# Включаем статическую линковку
+set(Boost_USE_STATIC_LIBS ON)
 set(Boost_USE_RELEASE_LIBS ON)
 set(Boost_USE_MULTITHREAD ON)
+
+# Пути для Boost
 set(BOOST_ROOT "/usr")
 set(BOOST_INCLUDEDIR "${BOOST_ROOT}/include")
 set(BOOST_LIBRARYDIR "${BOOST_ROOT}/lib")
 
+# Пути для VCPKG (если используется)
 set(CMAKE_TOOLCHAIN_FILE "${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "Vcpkg toolchain file")
 
 # Поиск и подключение зависимостей
@@ -36,10 +40,13 @@ add_executable(validator
     dataformatter/YAMLformatter.cpp
 )
 
-# Подключение библиотек
+# Подключение библиотек (статически)
 target_link_libraries(validator
     nlohmann_json::nlohmann_json
     ${Boost_LIBRARIES}
+    # ${BOOST_LIBRARYDIR}/libboost_system.a
+    # ${BOOST_LIBRARYDIR}/libboost_filesystem.a
+    # ${BOOST_LIBRARYDIR}/libboost_program_options.a
     ${LIBXML2_LIBRARIES}
     yaml-cpp
 )
