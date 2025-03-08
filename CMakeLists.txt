@@ -24,6 +24,12 @@ find_package(Boost 1.58 REQUIRED COMPONENTS program_options system filesystem)
 # Для поиска и использования статической версии libxml2
 find_package(LibXml2 REQUIRED)
 
+# Указываем путь к заголовочным файлам libxml2
+include_directories(/usr/libxml2_2.13.6)
+
+# Указываем путь к статической библиотеке
+link_directories(/usr/libxml2_2.13.6/lib)
+
 # Указываем статическую линковку для libxml2
 set(LIBXML2_STATIC ON)  # Статическая линковка для libxml2
 
@@ -47,7 +53,8 @@ add_executable(validator
 target_link_libraries(validator
     nlohmann_json::nlohmann_json
     ${Boost_LIBRARIES}
-    ${LIBXML2_LIBRARIES}
+    # ${LIBXML2_LIBRARIES}
+    xml2
     yaml-cpp
 )
 

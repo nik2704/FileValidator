@@ -11,27 +11,41 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: true
+
+      # Install dependencies for Boost, nlohmann-json, YAML, and libxml2
       - run: sudo apt-get update && sudo apt-get install libboost-program-options-dev libboost-system-dev libboost-filesystem-dev -y
       - run: sudo apt-get install nlohmann-json3-dev -y
-      - run: sudo apt-get install libtinyxml2-dev libxml2-dev -y
-      - run: sudo apt-get install libyaml-cpp-dev -y          
-
-      - run: sudo apt-get install libboost-all-dev -y # Ensures Boost libraries are available
+      - run: sudo apt-get install libtinyxml2-dev libxml2-dev libxml2-static-dev -y # Install static libxml2
+      - run: sudo apt-get install libyaml-cpp-dev -y
+      - run: sudo apt-get install libboost-all-dev -y  # Ensures Boost libraries are available
       - run: sudo apt-get install libssl-dev -y  # Ensure OpenSSL is statically linked
 
+      # Create build directory
       - run: mkdir -p build
-      # - run: cmake -B build -S . -DPATCH_VERSION=${{ github.run_number }} -DWITH_BOOST_TEST=ON
-      - run: cmake -B build -S . -DPATCH_VERSION=${{ github.run_number }} -DWITH_BOOST_TEST=ON -DYAML_CPP_STATIC=ON
 
+      # Run cmake to configure the build, enabling static libraries for YAML and libxml2
+      - run: cmake -B build -S . -DPATCH_VERSION=${{ github.run_number }} -DWITH_BOOST_TEST=ON -DYAML_CPP_STATIC=ON -DCMAKE_STATIC_LIBS=ON
+
+      # Build the project
       - run: cmake --build build
+
+      # Run tests
       - run: ctest --test-dir build --output-on-failure
+
+      # Build the package
       - run: cmake --build build --target package
+
+      # List the generated packages
       - run: ls -lh build/*.deb
+
+      # Upload the build artifacts
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: build-output
           path: build/
+
+      # Create a release
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -42,6 +56,8 @@ jobs:
           prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.MY_ACCESS_TOKEN }}
+
+      # Upload the release asset
       - name: Upload Release Asset
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
