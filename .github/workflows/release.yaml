@@ -19,7 +19,7 @@ jobs:
       - run: sudo apt-get install nlohmann-json3-dev -y
       - run: sudo apt-get install libyaml-cpp-dev -y
 
-      - run: sudo apt-get install libyaml-cpp0.6 libyaml-cpp-dev -y
+      - run: sudo apt-get install libyaml-cpp-dev
       - run: sudo ldconfig  # Перезагружает кэш динамических библиотек
 
       - run: sudo apt-get install libboost-all-dev -y
