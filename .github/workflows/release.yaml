@@ -20,7 +20,9 @@ jobs:
       - run: sudo apt-get install libssl-dev -y  # Ensure OpenSSL is statically linked
 
       - run: mkdir -p build
-      - run: cmake -B build -S . -DPATCH_VERSION=${{ github.run_number }} -DWITH_BOOST_TEST=ON
+      # - run: cmake -B build -S . -DPATCH_VERSION=${{ github.run_number }} -DWITH_BOOST_TEST=ON
+      - run: cmake -B build -S . -DPATCH_VERSION=${{ github.run_number }} -DWITH_BOOST_TEST=ON -DYAML_CPP_STATIC=ON
+
       - run: cmake --build build
       - run: ctest --test-dir build --output-on-failure
       - run: cmake --build build --target package

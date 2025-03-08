@@ -27,10 +27,12 @@ find_package(LibXml2 REQUIRED)
 # Указываем статическую линковку для libxml2
 set(LIBXML2_STATIC ON)  # Статическая линковка для libxml2
 
-# Если нужно указать дополнительные пути для поиска статической библиотеки
-# find_library(LIBXML2_STATIC_LIBRARIES NAMES xml2 PATHS /path/to/static/libs)
-
+# Поиск и подключение yaml-cpp
+# Добавляем флаг для статической линковки
 find_package(yaml-cpp REQUIRED)
+
+# Включаем поддержку статической линковки для yaml-cpp
+set(YAML_CPP_STATIC ON)
 
 # Добавление исполняемого файла
 add_executable(validator
