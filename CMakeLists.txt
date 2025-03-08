@@ -35,21 +35,12 @@ link_directories(/usr/libxml2-2.13.6/lib)
 # Указываем статическую линковку для libxml2
 set(LIBXML2_STATIC ON)  # Статическая линковка для libxml2
 
-# Поиск и подключение yaml-cpp
-# Добавляем флаг для статической линковки
-set(YAML_CPP_STATIC ON)
-find_package(yaml-cpp REQUIRED)
-
-# Включаем поддержку статической линковки для yaml-cpp
-set(YAML_CPP_STATIC ON)
-
 # Добавление исполняемого файла
 add_executable(validator
     main.cpp
     utils/utils.cpp
     dataformatter/JSONformatter.cpp
     dataformatter/XMLformatter.cpp
-    dataformatter/YAMLformatter.cpp
 )
 
 # Подключение библиотек
@@ -58,7 +49,6 @@ target_link_libraries(validator
     ${Boost_LIBRARIES}
     # ${LIBXML2_LIBRARIES}
     xml2
-    yaml-cpp
 )
 
 # Настройки стандарта C++
