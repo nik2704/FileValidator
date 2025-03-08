@@ -37,6 +37,7 @@ set(LIBXML2_STATIC ON)  # Статическая линковка для libxml2
 
 # Поиск и подключение yaml-cpp
 # Добавляем флаг для статической линковки
+set(YAML_CPP_STATIC ON)
 find_package(yaml-cpp REQUIRED)
 
 # Включаем поддержку статической линковки для yaml-cpp
