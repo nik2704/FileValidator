@@ -25,10 +25,12 @@ find_package(Boost 1.58 REQUIRED COMPONENTS program_options system filesystem)
 # find_package(LibXml2 REQUIRED)
 
 # Указываем путь к заголовочным файлам libxml2
-include_directories(/usr/libxml2_2.13.6)
+include_directories(/usr/libxml2-2.13.6)
+include_directories(/usr/libxml2-2.13.6/include)
+
 
 # Указываем путь к статической библиотеке
-link_directories(/usr/libxml2_2.13.6/lib)
+link_directories(/usr/libxml2-2.13.6/lib)
 
 # Указываем статическую линковку для libxml2
 set(LIBXML2_STATIC ON)  # Статическая линковка для libxml2
