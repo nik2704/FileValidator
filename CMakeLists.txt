@@ -25,6 +25,8 @@ set(BOOST_LIBRARYDIR "${BOOST_ROOT}/lib")
 # Пути для VCPKG (если используется)
 set(CMAKE_TOOLCHAIN_FILE "${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "Vcpkg toolchain file")
 
+set(LibXml2_STATIC ON)
+
 # Поиск и подключение зависимостей
 find_package(nlohmann_json CONFIG REQUIRED)
 find_package(Boost 1.58 REQUIRED COMPONENTS program_options system filesystem)
@@ -44,12 +46,12 @@ add_executable(validator
 target_link_libraries(validator
     nlohmann_json::nlohmann_json
     ${Boost_LIBRARIES}
-    # ${BOOST_LIBRARYDIR}/libboost_system.a
-    # ${BOOST_LIBRARYDIR}/libboost_filesystem.a
-    # ${BOOST_LIBRARYDIR}/libboost_program_options.a
     ${LIBXML2_LIBRARIES}
     yaml-cpp
+    -static-libstdc++
+    -static-libgcc
 )
+
 
 # Настройки стандарта C++
 set_target_properties(validator PROPERTIES

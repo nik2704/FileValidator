@@ -17,11 +17,25 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y \
-            libboost-all-dev \
+            build-essential \
+            cmake \
+            libboost-dev \
+            libboost-program-options-dev \
+            libboost-system-dev \
+            libboost-filesystem-dev \
             nlohmann-json3-dev \
             libtinyxml2-dev \
             libxml2-dev \
             libyaml-cpp-dev
+
+      - name: Build static LibXML2
+        run: |
+          wget ftp://xmlsoft.org/libxml2/libxml2-2.9.12.tar.gz
+          tar -xvf libxml2-2.9.12.tar.gz
+          cd libxml2-2.9.12
+          ./configure --disable-shared --enable-static
+          make -j$(nproc)
+          sudo make install
 
       - name: Create build directory
         run: mkdir -p build
@@ -31,9 +45,10 @@ jobs:
           cmake -B build -S . \
             -DPATCH_VERSION=${{ github.run_number }} \
             -DWITH_BOOST_TEST=ON \
+            -DBUILD_SHARED_LIBS=OFF \
             -DBoost_USE_STATIC_LIBS=ON \
             -DOPENSSL_USE_STATIC_LIBS=TRUE \
-            -DCMAKE_EXE_LINKER_FLAGS="-static"
+            -DCMAKE_EXE_LINKER_FLAGS="-static -static-libgcc -static-libstdc++"
 
       - name: Build project
         run: cmake --build build
