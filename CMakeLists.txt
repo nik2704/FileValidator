@@ -32,6 +32,8 @@ find_package(nlohmann_json CONFIG REQUIRED)
 find_package(Boost 1.58 REQUIRED COMPONENTS program_options system filesystem)
 find_package(LibXml2 REQUIRED)
 find_package(yaml-cpp REQUIRED)
+find_package(ZLIB REQUIRED)  # добавляем zlib
+find_package(LZMA REQUIRED)   # добавляем lzma
 
 # Добавление исполняемого файла
 add_executable(validator
@@ -48,10 +50,11 @@ target_link_libraries(validator
     ${Boost_LIBRARIES}
     ${LIBXML2_LIBRARIES}
     yaml-cpp
+    ZLIB::ZLIB
+    LZMA::LZMA
     -static-libstdc++
     -static-libgcc
 )
-
 
 # Настройки стандарта C++
 set_target_properties(validator PROPERTIES
