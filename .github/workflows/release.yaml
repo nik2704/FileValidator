@@ -18,6 +18,10 @@ jobs:
       - run: sudo apt-get install libboost-program-options-dev libboost-system-dev libboost-filesystem-dev -y
       - run: sudo apt-get install nlohmann-json3-dev -y
       - run: sudo apt-get install libyaml-cpp-dev -y
+
+      - run: sudo apt-get install libyaml-cpp0.6 libyaml-cpp-dev -y
+      - run: sudo ldconfig  # Перезагружает кэш динамических библиотек
+
       - run: sudo apt-get install libboost-all-dev -y
       - run: sudo apt-get install libssl-dev -y
 
