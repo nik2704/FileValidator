@@ -16,15 +16,20 @@ enable_language(CXX)
 set(Boost_USE_STATIC_LIBS ON)  # Статическая линковка Boost
 set(Boost_USE_MULTITHREAD ON)  # Многопоточность
 set(BOOST_ROOT "/usr")
-# set(BOOST_INCLUDEDIR "${BOOST_ROOT}/include")
-# set(BOOST_LIBRARYDIR "${BOOST_ROOT}/lib")
-
-set(CMAKE_TOOLCHAIN_FILE "${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "Vcpkg toolchain file")
 
 # Поиск и подключение зависимостей
 find_package(nlohmann_json CONFIG REQUIRED)
 find_package(Boost 1.58 REQUIRED COMPONENTS program_options system filesystem)
+
+# Для поиска и использования статической версии libxml2
 find_package(LibXml2 REQUIRED)
+
+# Указываем статическую линковку для libxml2
+set(LIBXML2_STATIC ON)  # Статическая линковка для libxml2
+
+# Если нужно указать дополнительные пути для поиска статической библиотеки
+# find_library(LIBXML2_STATIC_LIBRARIES NAMES xml2 PATHS /path/to/static/libs)
+
 find_package(yaml-cpp REQUIRED)
 
 # Добавление исполняемого файла
