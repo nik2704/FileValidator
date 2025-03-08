@@ -23,6 +23,7 @@ jobs:
 
       # Download and build libxml2 from source
       - run: wget https://download.gnome.org/sources/libxml2/2.13/libxml2-2.13.6.tar.xz
+      - run: sudo mkdir -p /usr/libxml2-2.13.6
       - run: sudo tar -xf libxml2-2.13.6.tar.xz -C /usr/libxml2-2.13.6 --strip-components=1
       - run: |
           cd /usr/libxml2-2.13.6
