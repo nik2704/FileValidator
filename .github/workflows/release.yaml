@@ -12,13 +12,23 @@ jobs:
         with:
           submodules: true
 
-      # Install dependencies for Boost, nlohmann-json, YAML, and libxml2
-      - run: sudo apt-get update && sudo apt-get install libboost-program-options-dev libboost-system-dev libboost-filesystem-dev -y
+      # Install dependencies
+      - run: sudo apt-get update
+      - run: sudo apt-get install -y build-essential wget
+      - run: sudo apt-get install libboost-program-options-dev libboost-system-dev libboost-filesystem-dev -y
       - run: sudo apt-get install nlohmann-json3-dev -y
-      - run: sudo apt-get install libtinyxml2-dev libxml2-dev libxml2-static-dev -y # Install static libxml2
       - run: sudo apt-get install libyaml-cpp-dev -y
-      - run: sudo apt-get install libboost-all-dev -y  # Ensures Boost libraries are available
-      - run: sudo apt-get install libssl-dev -y  # Ensure OpenSSL is statically linked
+      - run: sudo apt-get install libboost-all-dev -y
+      - run: sudo apt-get install libssl-dev -y
+
+      # Download and build libxml2 from source
+      - run: wget https://download.gnome.org/sources/libxml2/2.13/libxml2-2.13.6.tar.xz
+      - run: tar -xf libxml2-2.13.6.tar.xz
+      - run: |
+          cd libxml2-2.13.6
+          ./configure --prefix=/usr/libxml2_2.13.6 --enable-static --disable-shared
+          make
+          sudo make install
 
       # Create build directory
       - run: mkdir -p build

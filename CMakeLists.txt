@@ -22,7 +22,7 @@ find_package(nlohmann_json CONFIG REQUIRED)
 find_package(Boost 1.58 REQUIRED COMPONENTS program_options system filesystem)
 
 # Для поиска и использования статической версии libxml2
-find_package(LibXml2 REQUIRED)
+# find_package(LibXml2 REQUIRED)
 
 # Указываем путь к заголовочным файлам libxml2
 include_directories(/usr/libxml2_2.13.6)
