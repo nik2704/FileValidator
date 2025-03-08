@@ -12,28 +12,20 @@ option(WITH_BOOST_TEST "Whether to build Boost test" ON)
 enable_language(C)
 enable_language(CXX)
 
-# Включаем статическую линковку
-set(Boost_USE_STATIC_LIBS ON)
-set(Boost_USE_RELEASE_LIBS ON)
-set(Boost_USE_MULTITHREAD ON)
-
-# Пути для Boost
+# Настройки Boost
+set(Boost_USE_STATIC_LIBS ON)  # Статическая линковка Boost
+set(Boost_USE_MULTITHREAD ON)  # Многопоточность
 set(BOOST_ROOT "/usr")
-set(BOOST_INCLUDEDIR "${BOOST_ROOT}/include")
-set(BOOST_LIBRARYDIR "${BOOST_ROOT}/lib")
+# set(BOOST_INCLUDEDIR "${BOOST_ROOT}/include")
+# set(BOOST_LIBRARYDIR "${BOOST_ROOT}/lib")
 
-# Пути для VCPKG (если используется)
 set(CMAKE_TOOLCHAIN_FILE "${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "Vcpkg toolchain file")
-
-set(LibXml2_STATIC ON)
 
 # Поиск и подключение зависимостей
 find_package(nlohmann_json CONFIG REQUIRED)
 find_package(Boost 1.58 REQUIRED COMPONENTS program_options system filesystem)
 find_package(LibXml2 REQUIRED)
 find_package(yaml-cpp REQUIRED)
-find_package(ZLIB REQUIRED)  # добавляем zlib
-find_package(LZMA REQUIRED)   # добавляем lzma
 
 # Добавление исполняемого файла
 add_executable(validator
@@ -44,16 +36,12 @@ add_executable(validator
     dataformatter/YAMLformatter.cpp
 )
 
-# Подключение библиотек (статически)
+# Подключение библиотек
 target_link_libraries(validator
     nlohmann_json::nlohmann_json
     ${Boost_LIBRARIES}
     ${LIBXML2_LIBRARIES}
     yaml-cpp
-    ZLIB::ZLIB
-    LZMA::LZMA
-    -static-libstdc++
-    -static-libgcc
 )
 
 # Настройки стандарта C++
