@@ -28,7 +28,7 @@ jobs:
             libxml2-dev \
             libyaml-cpp-dev \
             zlib1g-dev \
-            liblzma-dev  # Added LZMA development library
+            liblzma-dev
 
       - name: Build static Zlib
         run: |
